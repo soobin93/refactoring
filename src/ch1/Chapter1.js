@@ -13,7 +13,6 @@ const Chapter1 = () => {
     let result = `청구 내역 (고객명: ${invoice.customer})\n`;
 
     for (const perf of invoice.performances) {
-      // Print statement
       result += ` ${playFor(perf).name}: ${usd(amountFor(perf))} ${perf.audience}석\n`;
     }
 
