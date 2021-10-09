@@ -21,11 +21,8 @@ const Chapter1 = () => {
     }).format;
 
     for (let perf of invoice.performances) {
-      // Save credits
-      volumeCredits += Math.max(perf.audience - 30, 0);
-      // Additional credits for comedy audience
-      if (playFor(perf).type === 'comedy')
-        volumeCredits += Math.floor(perf.audience / 5);
+
+      volumeCredits += volumeCreditsFor(perf);
 
       // Print statement
       result += ` ${playFor(perf).name}: ${format(amountFor(perf) / 100)} ${perf.audience}석\n`;
@@ -35,6 +32,18 @@ const Chapter1 = () => {
     result += `총액: ${format(totalAmount / 100)}\n`;
     result += `적립 포인트: ${volumeCredits}점\n`
     return result;
+
+    // Nested functions below
+    function volumeCreditsFor(perf) {
+      let volumeCredits = 0;
+
+      volumeCredits += Math.max(perf.audience - 30, 0);
+
+      if (playFor(perf).type === 'comedy')
+        volumeCredits += Math.floor(perf.audience / 5);
+
+      return volumeCredits;
+    }
 
     function amountFor(aPerformance) {
       let result = 0;
