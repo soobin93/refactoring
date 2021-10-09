@@ -22,6 +22,25 @@ const Chapter1 = () => {
 
     for (let perf of invoice.performances) {
       const play = plays[perf.playID];
+
+      let thisAmount = amountFor(perf, play);
+
+      // Save credits
+      volumeCredits += Math.max(perf.audience - 30, 0);
+      // Additional credits for comedy audience
+      if (play.type === 'comedy')
+        volumeCredits += Math.floor(perf.audience / 5);
+
+      // Print statement
+      result += ` ${play.name}: ${format(thisAmount / 100)} ${perf.audience}석\n`;
+      totalAmount += thisAmount;
+    }
+
+    result += `총액: ${format(totalAmount / 100)}\n`;
+    result += `적립 포인트: ${volumeCredits}점\n`
+    return result;
+
+    function amountFor(perf, play) {
       let thisAmount = 0;
 
       switch (play.type) {
@@ -44,20 +63,8 @@ const Chapter1 = () => {
           throw new Error(`Unknown Genre: ${play.type}`);
       }
 
-      // Save credits
-      volumeCredits += Math.max(perf.audience - 30, 0);
-      // Additional credits for comedy audience
-      if (play.type === 'comedy')
-        volumeCredits += Math.floor(perf.audience / 5);
-
-      // Print statement
-      result += ` ${play.name}: ${format(thisAmount / 100)} ${perf.audience}석\n`;
-      totalAmount += thisAmount;
+      return thisAmount;
     }
-
-    result += `총액: ${format(totalAmount / 100)}\n`;
-    result += `적립 포인트: ${volumeCredits}점\n`
-    return result;
   };
 
   return (<></>);
