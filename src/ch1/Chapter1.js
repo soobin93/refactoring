@@ -14,10 +14,10 @@ const Chapter1 = () => {
 
 function statement(invoice, plays) {
   const statementData = {};
-  return renderPlainText(statementData, invoice);
+  return renderPlainText(statementData, invoice, plays);
 }
 
-function renderPlainText(data, invoice) {
+function renderPlainText(data, invoice, plays) {
   let result = `청구 내역 (고객명: ${invoice.customer})\n`;
 
   for (const perf of invoice.performances) {
